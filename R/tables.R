@@ -73,6 +73,60 @@ apa.xtable <- function(x, caption = NULL, label = NULL, align = NULL,
   return(.note)
 }
 
+#' Beautiful correlation matrices
+#'
+#' Takes an \code{\link[Hmisc]{rcorr}} matrix and returns a pretty printed
+#' data frame for APA publishing, complete with appropriate asterisks for
+#' significance and a stripped upper triangle.
+#'
+#' @param x \code{rcorr} matrix
+#' @param short.names Name the columns 1 .. N to save space
+#' @param lower Only show the lower triangular matrix and remove the last column
+#'
+#' @seealso \code{\link[Hmisc]{rcorr}}
+rcorr.pp <- function(x, short.names = TRUE, lower = TRUE) {
+  # error handling
+  if (class(x) != "rcorr") {
+    return(print(type.error(x, "rcorr")))
+  }
+
+  # define table values
+  R <- weights::rd(x$r, 2)
+  p <- x$P
+
+  # define notions for significance levels
+  stars <- apply(cor.matrix$P, 1:2, weights::starmaker,
+                 p.levels=c(.001, .01, .05), symbols=c("***", "**", "*"))
+
+  # build a new matrix that includes the correlations with appropriate stars
+  pp.matrix <- matrix(paste0(R, stars), ncol = ncol(R))
+  diag(pp.matrix) <- "---"
+
+  # apply row and column names
+  if (short.names) {
+    rownames(pp.matrix) <- paste0(1:ncol(R), ". ", colnames(R))
+    colnames(pp.matrix) <- 1:ncol(R)
+  } else {
+    rownames(pp.matrix) <- colnames(R)
+    colnames(pp.matrix) <- colnames(R)
+  }
+
+  if (lower) {
+    # remove upper triangle
+    pp.matrix[upper.tri(pp.matrix)] <- ""
+  }
+
+  pp.matrix <- as.data.frame(pp.matrix)
+
+  if (lower) {
+    # remove last column and return the matrix (which is now a data frame)
+    pp.matrix <- cbind(pp.matrix[1:length(pp.matrix)-1])
+  }
+
+  return(pp.matrix)
+}
+
+# -----------------------------
 
 length.error <- function(object, length) {
   paste0("% Error: Argument '", object, "' must have length of ", length, ".\n")
