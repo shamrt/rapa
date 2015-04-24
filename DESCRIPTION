@@ -7,16 +7,17 @@ Author: Shane Martin
 Maintainer: Shane Martin <dev.sh@nemart.in>
 Description: Provide helper functions for writing (esp. in pandoc markdown or LaTeX) in APA style (6th ed.), including generic tables, regression tables, and in-line text.
 License: MIT + file LICENSE
-Depends:
+Depends: 
     weights
-Enhances:
+Enhances: 
     stargazer,
     xtable,
     Hmisc,
     psych
 LazyLoad: yes
-Collate:
+Collate: 
     'rapa-package.R'
     'errors.R'
     'inline-text.R'
     'tables.R'
+Suggests: testthat
