@@ -6,6 +6,8 @@
 #' argument for creating table notes.
 #'
 #' @param note Character vector of length 1 containing the table's notes.
+#' @param wrap.text Quick helper that uses the 'tabularx' table environment and
+#'   allows for long notes.
 #'
 #' @seealso \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
 apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
@@ -61,7 +63,7 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 #' data frame for APA publishing, complete with appropriate asterisks for
 #' significance and a stripped upper triangle.
 #'
-#' @param x \code{rcorr} matrix
+#' @param rcorr An \code{rcorr} matrix
 #' @param short.names Name the columns 1 .. N to save space
 #' @param lower Only show the lower triangular matrix and remove the last column
 #'
@@ -74,7 +76,7 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 rcorr.pp <- function(rcorr, short.names = TRUE, lower = TRUE) {
   # error handling
   if (class(rcorr)[1] != "rcorr") {
-    return(cat(.type.error('rcorr', "rcorr")))
+    stop(.type.error('rcorr', "rcorr"))
   }
 
   # define table values
