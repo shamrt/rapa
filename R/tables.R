@@ -14,19 +14,16 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 
   if (!is.null(note)) {
     if (!is.character(note)) {
-      .error.present <- c(.error.present, type.error(note, 'character'))
+      .error.present <- c(.error.present, .type.error('note', 'character'))
     }
     if (length(note) > 1) {
-      .error.present <- c(.error.present, length.error(note, 1))
+      .error.present <- c(.error.present, .length.error('note', 1))
     }
   }
 
-  # ----------------
-
   # continue only if no errors
-  if (length(error.present) == 1) {
+  if (length(.error.present) == 1) {
     # create xtable
-
     .print.args <- list(xtable, caption.placement = "top")
 
     if (!is.null(note)) {
@@ -43,8 +40,7 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
     # print xtable
     .output <- do.call(print, c(.print.args, ...))
   } else {
-    cat(error.present, sep="")
-    .output <- error.present
+    .output <- cat(.error.present)
   }
 
   return(.output)
@@ -74,18 +70,23 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 #' @param lower Only show the lower triangular matrix and remove the last column
 #'
 #' @seealso \code{\link[Hmisc]{rcorr}}
-rcorr.pp <- function(x, short.names = TRUE, lower = TRUE) {
+#'
+#' @examples
+#' iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
+#' rcorr.pp(iris.rcorr)
+#' rcorr.pp(iris.rcorr, short.names = FALSE, lower = FALSE)
+rcorr.pp <- function(rcorr, short.names = TRUE, lower = TRUE) {
   # error handling
-  if (class(x) != "rcorr") {
-    return(print(type.error(x, "rcorr")))
+  if (class(rcorr)[1] != "rcorr") {
+    return(cat(.type.error('rcorr', "rcorr")))
   }
 
   # define table values
-  R <- weights::rd(x$r, 2)
-  p <- x$P
+  R <- weights::rd(rcorr$r, 2)
+  p <- rcorr$P
 
   # define notions for significance levels
-  stars <- apply(cor.matrix$P, 1:2, weights::starmaker,
+  stars <- apply(p, 1:2, weights::starmaker,
                  p.levels=c(.001, .01, .05), symbols=c("***", "**", "*"))
 
   # build a new matrix that includes the correlations with appropriate stars
@@ -114,13 +115,4 @@ rcorr.pp <- function(x, short.names = TRUE, lower = TRUE) {
   }
 
   return(pp.matrix)
-}
-
-# -----------------------------
-
-length.error <- function(object, length) {
-  paste0("% Error: Argument '", object, "' must have length of ", length, ".\n")
-}
-type.error <- function(object, type) {
-  paste0("% Error: Argument '", object, "' must be of type '", type, "'\n")
 }
