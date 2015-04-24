@@ -5,11 +5,16 @@
 #' \code{\link[xtable]{print.xtable}} function as well as an additional
 #' argument for creating table notes.
 #'
+#' @param xtable An \code{xtable} object.
 #' @param note Character vector of length 1 containing the table's notes.
 #' @param wrap.text Quick helper that uses the 'tabularx' table environment and
 #'   allows for long notes.
+#' @param ... Arguments passed to \code{print.xtable}.
 #'
 #' @seealso \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
+#'
+#' @include errors.R
+#' @export
 apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
   # error handling
   if (class(xtable)[1] != "xtable") {
@@ -70,9 +75,12 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 #' @seealso \code{\link[Hmisc]{rcorr}}
 #'
 #' @examples
-#' iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
+#' iris.rcorr <- Hmisc::rcorr(as.matrix(iris[, 1:4]))
 #' rcorr.pp(iris.rcorr)
 #' rcorr.pp(iris.rcorr, short.names = FALSE, lower = FALSE)
+#'
+#' @include errors.R
+#' @export
 rcorr.pp <- function(rcorr, short.names = TRUE, lower = TRUE) {
   # error handling
   if (class(rcorr)[1] != "rcorr") {

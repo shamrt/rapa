@@ -5,19 +5,20 @@ Version: 0.1
 Date: 2015-04-10
 Author: Shane Martin
 Maintainer: Shane Martin <dev.sh@nemart.in>
-Description: Provide helper functions for writing (esp. in pandoc markdown or LaTeX) in APA style (6th ed.), including generic tables, regression tables, and in-line text.
+Description: Provide helper functions for writing (esp. in pandoc markdown or
+    LaTeX) in APA style (6th ed.), including generic tables, regression tables,
+    and in-line text.
 License: MIT + file LICENSE
-Depends: 
+Imports:
     weights
-Enhances: 
-    stargazer,
+Enhances: stargazer,
     xtable,
     Hmisc,
     psych
-LazyLoad: yes
-Collate: 
-    'rapa-package.R'
+Suggests:
+    testthat
+Collate:
     'errors.R'
     'inline-text.R'
+    'rapa-package.R'
     'tables.R'
-Suggests: testthat

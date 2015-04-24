@@ -12,6 +12,9 @@
 #' @examples
 #' iris.rcorr <- Hmisc::rcorr(as.matrix(iris[, 1:4]))
 #' apa.rcorr.inline(iris.rcorr, 'Sepal.Length', 'Sepal.Width')
+#'
+#' @include errors.R
+#' @export
 apa.rcorr.inline <- function(rcorr, var1, var2, type = "pearson") {
   # error handling
   if (class(rcorr)[1] != "rcorr") {
@@ -68,6 +71,9 @@ apa.rcorr.inline <- function(rcorr, var1, var2, type = "pearson") {
 #' iris.lm.2 <- update(iris.lm.1, .~. + Petal.Length + Petal.Width)
 #' iris.anova <- anova(iris.lm.1, iris.lm.2)
 #' apa.anova(iris.anova)
+#'
+#' @include errors.R
+#' @export
 apa.anova <- function(anova) {
   # error handling
   if (class(anova)[1] != "anova") {
@@ -97,6 +103,9 @@ apa.anova <- function(anova) {
 #' @param pretty.print An optional dichotomous indicator for whether to prepend
 #'   the p-value abbreviation and appropriate sign to the returned number (see
 #'   details).
+#'
+#' @include errors.R
+#' @export
 apa.p.value <- function(p, pretty.print = TRUE) {
   # error handling
   .error.present <- "\n"
