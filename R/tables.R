@@ -10,40 +10,36 @@
 #' @seealso \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
 apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
   # error handling
-  .error.present <- "\n"
+  if (class(xtable)[1] != "xtable") {
+    stop(.type.error('xtable', 'xtable'))
+  }
 
   if (!is.null(note)) {
     if (!is.character(note)) {
-      .error.present <- c(.error.present, .type.error('note', 'character'))
+      stop(.type.error('note', 'character'))
     }
     if (length(note) > 1) {
-      .error.present <- c(.error.present, .length.error('note', 1))
+      stop(.length.error('note', 1))
     }
   }
 
-  # continue only if no errors
-  if (length(.error.present) == 1) {
-    # create xtable
-    .print.args <- list(xtable, caption.placement = "top")
 
-    if (!is.null(note)) {
-      .print.args$hline.after = c(-1, 0)
-      .print.args$add.to.row = .xtable.note(x, note)
-    }
+  # create xtable
+  .print.args <- list(xtable, caption.placement = "top")
 
-    # wrap wide tables
-    if (wrap.text) {
-      .print.args$tabular.environment="tabularx"
-      .print.args$width="\\textwidth"
-    }
-
-    # print xtable
-    .output <- do.call(print, c(.print.args, ...))
-  } else {
-    .output <- cat(.error.present)
+  if (!is.null(note)) {
+    .print.args$hline.after = c(-1, 0)
+    .print.args$add.to.row = .xtable.note(xtable, note)
   }
 
-  return(.output)
+  # wrap wide tables
+  if (wrap.text) {
+    .print.args$tabular.environment="tabularx"
+    .print.args$width="\\textwidth"
+  }
+
+  # print xtable
+  return(do.call(print, c(.print.args, ...)))
 }
 
 # Add notes to xtables
