@@ -3,7 +3,7 @@
 #' Displays the correlation between two variables within an
 #' \code{\link[Hmisc]{rcorr}} matrix table according to APA 6 guidelines.
 #'
-#' @param x An \code{rcorr} matrix
+#' @param rcorr An \code{rcorr} matrix
 #' @param var1 Name of first variable of interest (string/quoted object)
 #' @param var2 Name of second variable of interest (string/quoted object)
 #' @param type The method of correlation used to generate the \code{rcorr}
