@@ -18,7 +18,7 @@
 apa.rcorr.inline <- function(rcorr, var1, var2, type = "pearson") {
   # error handling
   if (class(rcorr)[1] != "rcorr") {
-    return(cat(.type.error('rcorr', "rcorr")))
+    stop(.type.error('rcorr', "rcorr"))
   }
 
   .error.present <- "\n"
