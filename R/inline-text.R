@@ -77,7 +77,7 @@ apa.rcorr.inline <- function(rcorr, var1, var2, type = "pearson") {
 apa.anova <- function(anova) {
   # error handling
   if (class(anova)[1] != "anova") {
-    return(.type.error('anova', "anova"))
+    stop(.type.error('anova', "anova"))
   }
 
   .df <- anova$Df[2]
