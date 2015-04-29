@@ -7,12 +7,19 @@
 apa.xtable(xtable, note = NULL, wrap.text = FALSE, ...)
 }
 \arguments{
+\item{xtable}{An \code{xtable} object.}
+
 \item{note}{Character vector of length 1 containing the table's notes.}
+
+\item{wrap.text}{Quick helper that uses the 'tabularx' table environment and
+allows for long notes.}
+
+\item{...}{Arguments passed to \code{print.xtable}.}
 }
 \description{
 Function that take an \code{\link[xtable]{xtable}} object and prints a LaTeX
 table in APA 6 format. It uses the same arguments as the original
-\code{\link[xtable]{xtable.print}} function as well as an additional
+\code{\link[xtable]{print.xtable}} function as well as an additional
 argument for creating table notes.
 }
 \seealso{

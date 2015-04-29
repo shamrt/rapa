@@ -7,14 +7,14 @@
 apa.rcorr.inline(rcorr, var1, var2, type = "pearson")
 }
 \arguments{
+\item{rcorr}{An \code{rcorr} matrix}
+
 \item{var1}{Name of first variable of interest (string/quoted object)}
 
 \item{var2}{Name of second variable of interest (string/quoted object)}
 
 \item{type}{The method of correlation used to generate the \code{rcorr}
   matrix}
-
-\item{x}{An \code{rcorr} matrix}
 }
 \description{
 Displays the correlation between two variables within an
