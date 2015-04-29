@@ -95,9 +95,9 @@ apa.anova <- function(anova) {
 #' Formats and reports a p-value according to APA 6 guidelines. Returns a
 #' string.
 #'
-#' This function is primarily intended to be used by other helper functions, so
-#' by default p-values are pretty-printed (e.g., "_p_ = .152") instead of simply
-#' returning the correctly rounded p-value (e.g., ".152")
+#' This function is primarily intended for use by other \code{rapa} helper
+#' functions, so by default p-values are pretty-printed (e.g., "_p_ = .152")
+#' instead of simply returning the correctly rounded p-value (e.g., ".152")
 #'
 #' @param p A number representing a p-value (must be less than 1).
 #' @param pretty.print An optional dichotomous indicator for whether to prepend
@@ -108,32 +108,29 @@ apa.anova <- function(anova) {
 #' @export
 apa.p.value <- function(p, pretty.print = TRUE) {
   # error handling
-  .error.present <- "\n"
-
-  if (!is.null(p)) {
-    if (!is.numeric(p)) {
-      .error.present <- c(.error.present, .type.error('p', 'numeric'))
-    }
-    if (p > 1) {
-      .error.present <- c(.error.present, .value.error('note', "greater than 1"))
-    }
+  if (!is.numeric(p)) {
+    stop(.type.error('p', 'numeric'))
+  }
+  if (p > 1) {
+    stop(.value.error('note', "less than 1"))
   }
 
-  # continue only if no errors
-  if (length(.error.present) == 1) {
-    # calculate displayed p-value
-    if (p > .001) {
-      p <- weights::rd(p, digits = 3, add = FALSE)
-      p.pp <- paste("_p_", "=", p)
-    } else {
-      p <- "< .001"
-      p.pp <- paste("_p_", p)
-    }
+  # calculate displayed p-value
+  if (p >= .001) {
+    p.round <- round(p, digits = 3)  # needed to round scientific notation
+    p.drop.trailing.0 <- format(p.round, drop0trailing = TRUE)
+    p.drop.leading.0 <- sub("0\\.(\\d+)", ".\\1",
+                            as.character(p.drop.trailing.0))
+    # re-add trailing zero if remaining number rounded to only 1 decimal place
+    p.clean <- ifelse(nchar(p.drop.leading.0) < 3,
+                      paste0(p.drop.leading.0, "0"), p.drop.leading.0)
 
-    output <- ifelse(pretty.print, p.pp, p)
+    p.pp <- paste("_p_", "=", p.clean)
   } else {
-    output <- cat(.error.present)
+    p <- ".001"
+
+    p.pp <- paste("_p_", "<", p)
   }
 
-  return(output)
+  return(ifelse(pretty.print, p.pp, p))
 }
