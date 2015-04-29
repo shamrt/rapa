@@ -1,5 +1,7 @@
 # RAPA: Report tables and statistics in APA 6 format
 
+[![Travis-CI Build Status](https://travis-ci.org/shamrt/rapa.png?branch=master)](https://travis-ci.org/shamrt/rapa)
+
 `rapa` allows you to dynamically inject R objects (especially tables) into your manuscript and does its best to style them in accordance with APA 6 guidelines.
 The helper functions in this package return text in either LaTeX or pandoc-style markdown format, making them especially handy when used in combination with [RMarkdown](http://rmarkdown.rstudio.com).
 
