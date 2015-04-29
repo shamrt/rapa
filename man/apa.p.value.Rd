@@ -10,16 +10,16 @@ apa.p.value(p, pretty.print = TRUE)
 \item{p}{A number representing a p-value (must be less than 1).}
 
 \item{pretty.print}{An optional dichotomous indicator for whether to prepend
-the p-value abbreviation and appropriate sign to the returned number (see
-details).}
+  the p-value abbreviation and appropriate sign to the returned number (see
+  details).}
 }
 \description{
 Formats and reports a p-value according to APA 6 guidelines. Returns a
 string.
 }
 \details{
-This function is primarily intended to be used by other helper functions, so
-by default p-values are pretty-printed (e.g., "_p_ = .152") instead of simply
-returning the correctly rounded p-value (e.g., ".152")
+This function is primarily intended for use by other \code{rapa} helper
+functions, so by default p-values are pretty-printed (e.g., "_p_ = .152")
+instead of simply returning the correctly rounded p-value (e.g., ".152")
 }
 

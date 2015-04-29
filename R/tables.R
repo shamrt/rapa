@@ -2,48 +2,51 @@
 #'
 #' Function that take an \code{\link[xtable]{xtable}} object and prints a LaTeX
 #' table in APA 6 format. It uses the same arguments as the original
-#' \code{\link[xtable]{xtable.print}} function as well as an additional
+#' \code{\link[xtable]{print.xtable}} function as well as an additional
 #' argument for creating table notes.
 #'
+#' @param xtable An \code{xtable} object.
 #' @param note Character vector of length 1 containing the table's notes.
+#' @param wrap.text Quick helper that uses the 'tabularx' table environment and
+#'   allows for long notes.
+#' @param ... Arguments passed to \code{print.xtable}.
 #'
 #' @seealso \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
+#'
+#' @include errors.R
+#' @export
 apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
   # error handling
-  .error.present <- "\n"
+  if (class(xtable)[1] != "xtable") {
+    stop(.type.error('xtable', 'xtable'))
+  }
 
   if (!is.null(note)) {
     if (!is.character(note)) {
-      .error.present <- c(.error.present, .type.error('note', 'character'))
+      stop(.type.error('note', 'character'))
     }
     if (length(note) > 1) {
-      .error.present <- c(.error.present, .length.error('note', 1))
+      stop(.length.error('note', 1))
     }
   }
 
-  # continue only if no errors
-  if (length(.error.present) == 1) {
-    # create xtable
-    .print.args <- list(xtable, caption.placement = "top")
 
-    if (!is.null(note)) {
-      .print.args$hline.after = c(-1, 0)
-      .print.args$add.to.row = .xtable.note(x, note)
-    }
+  # create xtable
+  .print.args <- list(xtable, caption.placement = "top")
 
-    # wrap wide tables
-    if (wrap.text) {
-      .print.args$tabular.environment="tabularx"
-      .print.args$width="\\textwidth"
-    }
-
-    # print xtable
-    .output <- do.call(print, c(.print.args, ...))
-  } else {
-    .output <- cat(.error.present)
+  if (!is.null(note)) {
+    .print.args$hline.after = c(-1, 0)
+    .print.args$add.to.row = .xtable.note(xtable, note)
   }
 
-  return(.output)
+  # wrap wide tables
+  if (wrap.text) {
+    .print.args$tabular.environment="tabularx"
+    .print.args$width="\\textwidth"
+  }
+
+  # print xtable
+  return(do.call(print, c(.print.args, ...)))
 }
 
 # Add notes to xtables
@@ -65,20 +68,23 @@ apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {
 #' data frame for APA publishing, complete with appropriate asterisks for
 #' significance and a stripped upper triangle.
 #'
-#' @param x \code{rcorr} matrix
+#' @param rcorr An \code{rcorr} matrix
 #' @param short.names Name the columns 1 .. N to save space
 #' @param lower Only show the lower triangular matrix and remove the last column
 #'
 #' @seealso \code{\link[Hmisc]{rcorr}}
 #'
 #' @examples
-#' iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
+#' iris.rcorr <- Hmisc::rcorr(as.matrix(iris[, 1:4]))
 #' rcorr.pp(iris.rcorr)
 #' rcorr.pp(iris.rcorr, short.names = FALSE, lower = FALSE)
+#'
+#' @include errors.R
+#' @export
 rcorr.pp <- function(rcorr, short.names = TRUE, lower = TRUE) {
   # error handling
   if (class(rcorr)[1] != "rcorr") {
-    return(cat(.type.error('rcorr', "rcorr")))
+    stop(.type.error('rcorr', "rcorr"))
   }
 
   # define table values
