@@ -13,6 +13,16 @@
 #'
 #' @seealso \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
 #'
+#' @examples
+#' library(Hmisc)
+#' library(xtable)
+#'
+#' iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
+#' iris.rcorr.pp <- rcorr.pp(iris.rcorr)
+#' iris.xtable <- xtable(iris.rcorr.pp)
+#'
+#' apa.xtable(iris.xtable)
+#'
 #' @include errors.R
 #' @export
 apa.xtable <- function(xtable, note = NULL, wrap.text = FALSE, ...) {

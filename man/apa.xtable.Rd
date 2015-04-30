@@ -22,6 +22,16 @@ table in APA 6 format. It uses the same arguments as the original
 \code{\link[xtable]{print.xtable}} function as well as an additional
 argument for creating table notes.
 }
+\examples{
+library(Hmisc)
+library(xtable)
+
+iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
+iris.rcorr.pp <- rcorr.pp(iris.rcorr)
+iris.xtable <- xtable(iris.rcorr.pp)
+
+apa.xtable(iris.xtable)
+}
 \seealso{
 \code{\link[xtable]{xtable}}, \code{\link[xtable]{print.xtable}}
 }
