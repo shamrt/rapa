@@ -3,5 +3,6 @@
 export(apa.anova)
 export(apa.p.value)
 export(apa.rcorr.inline)
+export(apa.stargazer)
 export(apa.xtable)
 export(rcorr.pp)

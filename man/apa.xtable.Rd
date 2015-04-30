@@ -17,7 +17,7 @@ allows for long notes.}
 \item{...}{Arguments passed to \code{print.xtable}.}
 }
 \description{
-Function that take an \code{\link[xtable]{xtable}} object and prints a LaTeX
+Function that takes an \code{\link[xtable]{xtable}} object and prints a LaTeX
 table in APA 6 format. It uses the same arguments as the original
 \code{\link[xtable]{print.xtable}} function as well as an additional
 argument for creating table notes.
