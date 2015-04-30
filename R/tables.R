@@ -1,6 +1,6 @@
 #' Create APA 6 export tables
 #'
-#' Function that take an \code{\link[xtable]{xtable}} object and prints a LaTeX
+#' Function that takes an \code{\link[xtable]{xtable}} object and prints a LaTeX
 #' table in APA 6 format. It uses the same arguments as the original
 #' \code{\link[xtable]{print.xtable}} function as well as an additional
 #' argument for creating table notes.
@@ -131,4 +131,53 @@ rcorr.pp <- function(rcorr, short.names = TRUE, lower = TRUE) {
   }
 
   return(pp.matrix)
+}
+
+#' Create APA 6-styled regression tables
+#'
+#' Function that customizes the \code{\link[stargazer]{stargazer}} in order that
+#' it produces regression model tables that conform to APA 6 guidelines.
+#'
+#' Customized parametres, which should not be otherwise set, include:
+#' \code{style},
+#' \code{column.labels},
+#' \code{notes.align},
+#' \code{notes.label},
+#' \code{keep.stat},
+#' \code{no.space},
+#' and
+#' \code{header}.
+#' No new parametres are added, so refer to the \code{stargazer} documentation
+#' for complete usage information.
+#'
+#' Note: At this time, adjusted R-squared is labelled \code{Adjusted R$^{2}$}
+#' rather than \code{\\delta R$^{2}$} in this function's output. Until someone is
+#' able to add an APA style to the \code{stargazer} package, this output is as
+#' close to APA 6-style as this function will get.
+#'
+#' @param ... Parameters passed on to the \code{stargazer} function
+#'
+#' @seealso \code{\link[stargazer]{stargazer}}
+#'
+#' @examples
+#' library(stargazer)
+#'
+#' iris.lm.1 <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+#' iris.lm.2 <- update(iris.lm.1, .~. + Petal.Length + Petal.Width)
+#'
+#' apa.stargazer(iris.lm.1, iris.lm.2,
+#'               covariate.labels = c("1. SW", "2. PL", "2. PW"),
+#'               notes = "SW = Sepal width, PL = Petal length, PW = Petal width"
+#' )
+#'
+#' @export
+apa.stargazer <- function(...) {
+  stargazer::stargazer(...,
+                       style = "demography",
+                       column.labels = rep('$\\beta$ (\\textit{SE})', 3),
+                       notes.align = 'l',
+                       notes.label = '\\textit{Notes:}',
+                       keep.stat = c("rsq", "f", "adj.rsq"),
+                       no.space = TRUE,
+                       header = FALSE)
 }
