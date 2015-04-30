@@ -1,4 +1,4 @@
-# RAPA: Report tables and statistics in APA 6 format
+# rapa: Report tables and statistics in APA 6 format
 
 [![Travis-CI Build Status](https://travis-ci.org/shamrt/rapa.png?branch=master)](https://travis-ci.org/shamrt/rapa)
 
