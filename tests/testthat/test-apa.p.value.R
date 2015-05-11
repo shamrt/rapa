@@ -36,5 +36,13 @@ test_that("apa.p.value returns expected string", {
 })
 
 test_that("apa.p.value does not accept numbers greater than 1", {
-  expect_error(apa.p.value(1.1), "less than 1")
+  expect_output(apa.p.value(1), "_p_ = 1")
+
+  expect_error(apa.p.value(1.1), "less than or equal to 1")
+})
+
+test_that("apa.p.value does not accept numbers less than 0", {
+  expect_output(apa.p.value(0), "_p_ < .001")
+
+  expect_error(apa.p.value(-0.1), "greater than or equal to 0")
 })

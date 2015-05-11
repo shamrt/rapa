@@ -15,11 +15,16 @@ apa.p.value(p, pretty.print = TRUE)
 }
 \description{
 Formats and reports a p-value according to APA 6 guidelines. Returns a
-string.
+string. Only accepts values between 0 and 1.
 }
 \details{
 This function is primarily intended for use by other \code{rapa} helper
 functions, so by default p-values are pretty-printed (e.g., "_p_ = .152")
-instead of simply returning the correctly rounded p-value (e.g., ".152")
+instead of simply returning the correctly rounded p-value (e.g., ".152").
+}
+\examples{
+apa.p.value(.15201)
+apa.p.value(.152e-2)
+apa.p.value(.00001)
 }
 
