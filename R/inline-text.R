@@ -93,16 +93,21 @@ apa.anova <- function(anova) {
 #' Report a p-value
 #'
 #' Formats and reports a p-value according to APA 6 guidelines. Returns a
-#' string.
+#' string. Only accepts values between 0 and 1.
 #'
 #' This function is primarily intended for use by other \code{rapa} helper
 #' functions, so by default p-values are pretty-printed (e.g., "_p_ = .152")
-#' instead of simply returning the correctly rounded p-value (e.g., ".152")
+#' instead of simply returning the correctly rounded p-value (e.g., ".152").
 #'
 #' @param p A number representing a p-value (must be less than 1).
 #' @param pretty.print An optional dichotomous indicator for whether to prepend
 #'   the p-value abbreviation and appropriate sign to the returned number (see
 #'   details).
+#'
+#' @examples
+#' apa.p.value(.15201)
+#' apa.p.value(.152e-2)
+#' apa.p.value(.00001)
 #'
 #' @include errors.R
 #' @export
@@ -112,7 +117,9 @@ apa.p.value <- function(p, pretty.print = TRUE) {
     stop(.type.error('p', 'numeric'))
   }
   if (p > 1) {
-    stop(.value.error('note', "less than 1"))
+    stop(.value.error('p', "less than or equal to 1"))
+  } else if (p < 0) {
+    stop(.value.error('p', "greater than or equal to 0"))
   }
 
   # calculate displayed p-value
@@ -122,8 +129,9 @@ apa.p.value <- function(p, pretty.print = TRUE) {
     p.drop.leading.0 <- sub("0\\.(\\d+)", ".\\1",
                             as.character(p.drop.trailing.0))
     # re-add trailing zero if remaining number rounded to only 1 decimal place
-    p.clean <- ifelse(nchar(p.drop.leading.0) < 3,
-                      paste0(p.drop.leading.0, "0"), p.drop.leading.0)
+    p.clean <- ifelse(nchar(p.drop.leading.0) < 3 && p.drop.leading.0 != 1,
+                      paste0(p.drop.leading.0, "0"),
+                      p.drop.leading.0)
 
     p.pp <- paste("_p_", "=", p.clean)
   } else {
