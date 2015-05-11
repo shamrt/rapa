@@ -22,7 +22,10 @@ test_that("apa.rcorr.inline only accepts rcorr objects as first argument", {
 })
 
 test_that("apa.rcorr.inline returns expected string", {
-  test.rcorr <- apa.rcorr.inline(iris.rcorr, 'Sepal.Length', 'Sepal.Width')
+  expected_output <- "_r_ = -.12, _p_ = .152"
 
-  expect_output(test.rcorr, "_r_ = -.12, _p_ = .152")
+  expect_output(apa.rcorr.inline(iris.rcorr, 'Sepal.Length', 'Sepal.Width'),
+                expected_output)
+  expect_output(apa(iris.rcorr, 'Sepal.Length', 'Sepal.Width'),
+                expected_output)
 })

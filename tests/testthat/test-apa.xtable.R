@@ -43,5 +43,8 @@ test_that("apa.xtable prints notes, which can only be characters and must have l
 
 
 test_that("apa.xtable changes to tabularx LaTeX environment when wrap enabled", {
-  expect_output(apa.xtable(iris.xtable, wrap.text = TRUE), "tabularx")
+  expected_output <- "tabularx"
+
+  expect_output(apa.xtable(iris.xtable, wrap.text = TRUE), expected_output)
+  expect_output(apa(iris.xtable, wrap.text = TRUE), expected_output)
 })
