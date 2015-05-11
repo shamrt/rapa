@@ -15,5 +15,8 @@ test_that("apa.anova only accepts 'anova'-type objects", {
 })
 
 test_that("apa.anova returns expected string", {
-  expect_output(apa.anova(iris.anova), "*F*\\(2, 146\\) = 436.17, _p_ < .001")
+  expected_output <- "*F*\\(2, 146\\) = 436.17, _p_ < .001"
+
+  expect_output(apa.anova(iris.anova), expected_output)
+  expect_output(apa(iris.anova), expected_output)
 })

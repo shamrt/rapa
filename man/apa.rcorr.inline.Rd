@@ -21,7 +21,9 @@ Displays the correlation between two variables within an
 \code{\link[Hmisc]{rcorr}} matrix table according to APA 6 guidelines.
 }
 \examples{
-iris.rcorr <- Hmisc::rcorr(as.matrix(iris[, 1:4]))
+library(Hmisc)
+
+iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
 apa.rcorr.inline(iris.rcorr, 'Sepal.Length', 'Sepal.Width')
 }
 
