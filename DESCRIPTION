@@ -1,7 +1,7 @@
 Package: rapa
 Type: Package
 Title: Helper functions for writing and publishing in APA 6 style
-Version: 0.2
+Version: 0.3
 Date: 2015-04-10
 Author: Shane Martin
 Maintainer: Shane Martin <dev.sh@nemart.in>
