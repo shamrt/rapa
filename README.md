@@ -31,17 +31,17 @@ iris.rcorr <- rcorr(as.matrix(iris[, 1:4]))
 iris.rcorr.pp <- rcorr.pp(iris.rcorr)  # Pretty-printed matrix
 
 iris.xtable <- xtable(iris.rcorr.pp)
-apa.xtable(iris.xtable)
+apa(iris.xtable)
 
 # Report in-line correlation
-apa.rcorr.inline(iris.rcorr, 'Sepal.Length', 'Sepal.Width')
+apa(iris.rcorr, 'Sepal.Length', 'Sepal.Width')
 
 # GLM-based ANOVA
 iris.lm.1 <- lm(Sepal.Length ~ Sepal.Width, data = iris)
 iris.lm.2 <- update(iris.lm.1, .~. + Petal.Length + Petal.Width)
 
 iris.anova <- anova(iris.lm.1, iris.lm.2)
-apa.anova(iris.anova)
+apa(iris.anova)
 ```
 
 ## Details
